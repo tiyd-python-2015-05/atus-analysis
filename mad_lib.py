@@ -19,4 +19,30 @@ if starts_with_gerund:
     lib['verb'] = 'was really enjoying ' + lib['verb']
 else:
     lib['verb'] = 'did a bit of ' + lib['verb']
+
 print('{person} {verb} at {place} {when}.'.format(**lib))
+
+lib = {'person': random.choice(persons),
+       'verb' : activity.lower(),
+       'place': random.choice(places),
+       'when' : random.choice(whens),
+       }
+if starts_with_gerund:
+    lib['verb'] = 'ended up ' + lib['verb']
+else:
+    lib['verb'] = 'randomly decided to start doing ' + lib['verb']
+
+print('It was all fun and games until {person} {verb} all the time {when}.'.format(**lib))
+
+lib = {'person': random.choice(persons),
+       'verb' : activity.lower(),
+       'place': random.choice(places),
+       'when' : random.choice(whens),
+       }
+
+# if starts_with_gerund:
+#     lib['verb'] = 'ended up ' + lib['verb']
+# else:
+#     lib['verb'] = 'randomly decided to start doing ' + lib['verb']
+
+print('{person} ultimately decided that {verb} just wasn\'t the same as it used to be {when}.'.format(**lib))
