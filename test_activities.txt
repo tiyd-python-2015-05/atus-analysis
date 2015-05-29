@@ -1,0 +1,25 @@
+01 Personal Care
+  01 Sleeping
+    01 Sleeping
+    02 Sleeplessness
+    99 Sleeping, n.e.c.*
+  02 Grooming
+    01 Washing, dressing and grooming oneself
+    99 Grooming, n.e.c.*
+  03 Health-related Self Care
+    01 Health-related self care
+    99 Self care, n.e.c.*
+  04 Personal Activities
+    01 Personal/Private activities
+    99 Personal activities, n.e.c.*
+  05 Personal Care Emergencies
+    01 Personal emergencies
+    99 Personal care emergencies, n.e.c.*
+  99 Personal Care, n.e.c.*
+    99 Personal care, n.e.c.*
+02 Household Activities
+  01 Housework
+    01 Interior cleaning
+    02 Laundry
+    03 Sewing, repairing, & maintaining textiles
+    04 Storing interior hh items, inc. food
