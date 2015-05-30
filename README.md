@@ -1,5 +1,14 @@
 # American Time Use Analysis
 
+Our analysis is contained in the notebook atus_analysis.ipynb
+
+We also created a module that will make charts based on demographics and
+activity codes.  It will create a pdf of your chart in the current directory.
+Run python3 atus_data_finder.py in the command line.
+
+Enjoy.
+
+
 ## Description
 
 Use the U.S. Department of Labor's data on Americans' time use for research and analysis.

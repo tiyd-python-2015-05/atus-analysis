@@ -242,7 +242,7 @@ def replace_code(code):
     for num in atus_codes_list:
         if num[0][1:] == str(code):
             return num[1]
-        
+
 
 def replace_fips(code):
     state_code_rev = {int(value): key for key, value in state_codes.items()}
@@ -273,6 +273,9 @@ state_codes = {'WA': '53', 'DE': '10', 'DC': '11', 'WI': '55', 'WV': '54', 'HI':
                 'ME': '23', 'MD': '24', 'OK': '40', 'OH': '39', 'UT': '49', 'MO': '29',
                 'MN': '27', 'MI': '26', 'RI': '44', 'KS': '20', 'MT': '30', 'MS': '28',
                 'SC': '45', 'KY': '21', 'OR': '41', 'SD': '46'}
+
+
+
 
 atus_codes_list = [
     ('t01', 'Personal Care'),
