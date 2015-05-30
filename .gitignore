@@ -3,7 +3,9 @@
 ### IPythonNotebook ###
 # Temporary data
 .ipynb_checkpoints/
-
+atusdata/
+data/
+questions
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
