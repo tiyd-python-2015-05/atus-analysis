@@ -27,7 +27,18 @@ def multi_merged_df():
     res_sub_data = res_data.loc[:, ['TUCASEID', 'TEIO1COW']]
     indexed_res_sub_data = res_sub_data.set_index(['TUCASEID'])
     multi_merged_data = pd.merge(merged_data, indexed_res_sub_data, left_on='tucaseid', right_index=True)
+    multi_merged_data.GESTFIPS = multi_merged_data.GESTFIPS.map(lambda code: replace_fips(code))
+    multi_merged_data.TESEX = multi_merged_data.TESEX.map(lambda num: replace_sex(num))
+    multi_merged_data.TELFS = multi_merged_data.TELFS.map(lambda num: replace_employment(num))
+    multi_merged_data.GTMETSTA = multi_merged_data.GTMETSTA.map(lambda num: replace_metro(num))
+    multi_merged_data.TUDIARYDAY = multi_merged_data.TUDIARYDAY.map(lambda num: replace_days(num))
+    multi_merged_data.TEIO1COW = multi_merged_data.TEIO1COW.map(lambda num: replace_gov(num))
+    multi_merged_data.HETENURE = multi_merged_data.HETENURE.map(lambda num: replace_hetenure(num))
+    multi_merged_data.PRMJIND1 = multi_merged_data.PRMJIND1.map(lambda num: replace_industry(num))
+    multi_merged_data.HEFAMINC = multi_merged_data.HEFAMINC.map(lambda num: replace_hefaminc(num))
+    multi_merged_data['AGE_GROUPS'] = multi_merged_data.TEAGE.map(lambda num: replace_age(num))
     return multi_merged_data
+
 
 def average_minutes(data, activity_code):
     activity_col = "t{}".format(activity_code)
@@ -78,23 +89,74 @@ def group_and_average(data, groupby, activity_code, print_all=False):
     grouped_data = weighted_minutes_data.groupby(groupby).sum()
     grouped_data_count = weighted_minutes_data.groupby(groupby).count()
     grouped_data["avg_mins"] = grouped_data.weighted_minutes / grouped_data.weight
-    if groupby == "GESTFIPS":
-        grouped_data.index = grouped_data.index.to_series().map(lambda code: replace_fips(code))
-    elif groupby == "TESEX":
-        grouped_data.index = grouped_data.index.to_series().map(lambda num: replace_sex(num))
-    elif groupby == 'TELFS':
-        grouped_data.index = grouped_data.index.to_series().map(lambda num: replace_employment(num))
-    elif groupby == 'GTMETSTA':
-        grouped_data.index = grouped_data.index.to_series().map(lambda num: replace_metro(num))
-    elif groupby == 'TUDIARYDAY':
-        grouped_data.index = grouped_data.index.to_series().map(lambda num: replace_days(num))
-    elif groupby == 'TEIO1COW':
-        grouped_data.index = grouped_data.index.to_series().map(lambda num: replace_gov(num))
     data_refined = grouped_data["avg_mins"]
-    print("{} people are included in this analysis.".format(grouped_data_count[activity_code].sum()))
+    # print("{} people are included in this analysis.".format(grouped_data_count[activity_code].sum()))
     if print_all == True:
         print("Count by group: {}".format(grouped_data_count[activity_code]))
     return data_refined
+
+def replace_age(num):
+    if num < 20:
+        return '15-20'
+    elif 20 <= num < 30:
+        return '20-29'
+    elif 30 <= num < 40:
+        return '30-39'
+    elif 40 <= num < 50:
+        return '40-49'
+    elif 50 <= num < 60:
+        return '50-59'
+    elif 60 <= num < 70:
+        return '60-69'
+    elif 70 <= num < 80:
+        return '70-79'
+    elif 80 <= num:
+        return '80+'
+    else:
+        return 'No age'
+
+
+def replace_hefaminc(num):
+   hefaminc_dict = {
+       1: "$0-$5,000",
+       2: "$05,000-$7,499",
+       3: "$07,500-$9,999",
+       4: "$10,000-$12,499",
+       5: "$12,500-$14,999",
+       6: "$15,000-$19,999",
+       7: "$20,000-$24,999",
+       8: "$25,000-$29,999",
+       9: "$30,000-$34,999",
+       10: "$35,000-$39,999",
+       11: "$40,000-$49,999",
+       12: "$50,000-$59,999",
+       13: "$60,000-$74,999",
+       14: "$75,000-$99,999",
+       15: "Between $100,000 and $149,999",
+       16: "Over $150,000"}
+   return hefaminc_dict[num]
+
+
+def replace_industry(num):
+    industry_dict = {
+        1: 'Agriculture, forestry, fishing, and hunting',
+        2: 'Mining, quarrying, and oil and gas extraction',
+        3: 'Construction',
+        4: 'Manufacturing',
+        5: 'Wholesale and retail trade',
+        6: 'Transportation and utilities',
+        7: 'Information',
+        8: 'Financial activities',
+        9: 'Professional and business services ',
+        10: 'Educational and health services',
+        11: 'Leisure and hospitality',
+        12: 'Other services',
+        13: 'Public administration',
+        14: 'Armed Forces'}
+    try:
+        return industry_dict[num]
+    except:
+        return 'Other'
 
 def replace_gov(num):
     """Used to replace num for gov or private secotr job. The function is used in group_and_average function"""
@@ -114,6 +176,13 @@ def replace_gov(num):
         return 'Self-employed, unincorporated'
     if num == 8:
         return 'Without pay'
+
+def replace_hetenure(num):
+    hetenure_dict = {
+        1: 'Owned or being bought by a household member',
+        2: 'Rented for cash',
+        3: 'Occupied without payment of cash rent'}
+    return hetenure_dict[num]
 
 def replace_days(num):
     """Used to replace num for days of week. The function is used in group_and_average function"""
@@ -173,7 +242,7 @@ def replace_code(code):
     for num in atus_codes_list:
         if num[0][1:] == str(code):
             return num[1]
-
+        
 
 def replace_fips(code):
     state_code_rev = {int(value): key for key, value in state_codes.items()}
@@ -810,42 +879,3 @@ atus_codes_list = [
     ('t500107', 'Unable to code activity at 1st tier'),
     ('t500199', 'Data codes, n.e.c.*'),
     ('t5099', 'Data codes, n.e.c.*')]
-
-"""Previous versions of grouping function:
-
-def group_and_average(data, groupby, activity_code, state=False):
-    # You can pass in a higher level acitvity code. E.g. 1301 - recreation.
-    # The groupby works for age, state, employeed, unemployed, or sex.
-    # Functional Argument:
-    #     groupby must be a string.
-    #     state means if groupby is states then set state to True and get the index as abbreviations not FIPS.
-
-    weighted_minutes_data = add_weighted_minutes(data, activity_code)
-    grouped_data = weighted_minutes_data.groupby(groupby).sum()
-    grouped_data["avg_mins"] = grouped_data.weighted_minutes / grouped_data.weight
-    if state == True:
-       grouped_data.index = grouped_data.index.to_series().map(lambda code: replace_fips(code))
-    data_refined = grouped_data["avg_mins"]
-    return data_refined
-
-def group_and_average2(data, groupby, activity_code):
-    # You can pass in a higher level acitvity code. E.g. 1301 - recreation.
-    # The groupby works for age, state, employeed, unemployed, or sex.
-    # Functional Argument:
-    #     groupby must be a string.
-    #     state means if groupby is states then set state to True and get the index as abbreviations not FIPS.
-
-    weighted_minutes_data = add_weighted_minutes(data, activity_code)
-    grouped_data = weighted_minutes_data.groupby(groupby).sum()
-    grouped_data["avg_mins"] = grouped_data.weighted_minutes / grouped_data.weight
-    if groupby == "GESTFIPS":
-        grouped_data.index = grouped_data.index.to_series().map(lambda code: replace_fips(code))
-    elif groupby == "TESEX":
-        grouped_data.index = grouped_data.index.to_series().map(lambda num: replace_sex(num))
-    elif groupby == 'TELFS':
-        grouped_data.index = grouped_data.index.to_series().map(lambda num: replace_employment(num))
-    elif groupby == 'GTMETSTA':
-        grouped_data.index = grouped_data.index.to_series().map(lambda num: replace_metro(num))
-    data_refined = grouped_data["avg_mins"]
-    return data_refined
-"""
