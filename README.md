@@ -2,7 +2,12 @@
 
 ## Description
 
-Use the U.S. Department of Labor's data on Americans' time use for research and analysis.
+Use the U.S. Department of Labor's data on Americans' time use for research and analysis. This analysis and report provides an independent investigation into
+the claims of the BLS as laid out in their press release:
+
+http://www.bls.gov/news.release/atus.nr0.htm
+
+
 
 ## Objectives
 
