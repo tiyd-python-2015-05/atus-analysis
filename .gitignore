@@ -111,3 +111,7 @@ crashlytics.properties
 crashlytics-build.properties
 
 atusdata/
+.direnv
+.envrc
+.DS_Store
+atus-analysis/.DS_Store
