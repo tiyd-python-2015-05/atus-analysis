@@ -2,17 +2,44 @@
 
 ## Description
 
-Use the U.S. Department of Labor's data on Americans' time use for research and analysis.
+Use the U.S. Department of Labor's data on Americans' time use for research and analysis. This analysis and report provides an independent investigation into
+the claims of the BLS as laid out in their press release:
+
+http://www.bls.gov/news.release/atus.nr0.htm
+
+The organization follows the layout of that press release.
+
+## Organization
+
+The utility-oriented Python scripts are located in the analysis/ folder.
+The tests for those scripts are found in the analysis/tests/ folder.
+
+Analysis is displayed and commented on in the iPython notebook files.
+These are found in the top-level directory. They are organized around the BLS
+method. That follows the subject categories of:
+
+ - Working time spent
+ - Household activity time
+ - Leisure activity time
+ - Care of household children
+
+In addition to these, there is a top-level analysis sheet that just has
+the name "Analysis", which considers the problem from the basis of top-level
+time categories.
 
 ## Objectives
 
 ### Learning Objectives
 
-After completing this assignment, you should understand:
+Doing this assignment required use of the BLS datafiles specified in the
+file "download_data". These were read with the pandas CSV reader.
+After that, they were altered and reduced through a series of
+Python scripts which built on each other to accomplish increasingly
+complicated tasks.
 
-* How to use public data for analysis
-* How to translate data from CSVs to relational databases
-* How to publish your own data analysis as a notebook
+The most complicated of those tasks were the "cut by" routines. These
+performed several functions, which ultimately resulted in a table of
+mean hours spent by a selection of people, for a selection of activities.
 
 ### Performance Objectives
 

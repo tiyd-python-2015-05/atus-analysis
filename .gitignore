@@ -111,3 +111,9 @@ crashlytics.properties
 crashlytics-build.properties
 
 atusdata/
+
+codes.txt
+atus_codes.py
+.direnv/
+activity_codes.xlsx
+.DS_Store
