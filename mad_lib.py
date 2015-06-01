@@ -22,6 +22,7 @@ else:
 
 print('{person} {verb} at {place} {when}.'.format(**lib))
 
+activity = random.choice(list(activities.values()))
 lib = {'person': random.choice(persons),
        'verb' : activity.lower(),
        'place': random.choice(places),
@@ -34,6 +35,7 @@ else:
 
 print('It was all fun and games until {person} {verb} all the time {when}.'.format(**lib))
 
+activity = random.choice(list(activities.values()))
 lib = {'person': random.choice(persons),
        'verb' : activity.lower(),
        'place': random.choice(places),
