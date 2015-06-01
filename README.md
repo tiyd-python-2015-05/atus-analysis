@@ -1,3 +1,9 @@
+Run everything from top to bottom in the ipython file. I could(maybe should) have done more (like
+actually running some statistics, instead of mainly just graphs), but this
+is what I have thus far. I probably could have put some of those procedures into functions. Also, 
+I'm not sure if these procedures are entirely accurate, they look decent though. Anyways,cool assignment.
+
+
 # American Time Use Analysis
 
 ## Description
