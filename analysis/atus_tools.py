@@ -1,5 +1,6 @@
 import re
 import john_list
+import pandas as pd
 
 
 def get_ints(st):
@@ -118,6 +119,43 @@ def consolidate_columns(dfp):
         the_key = my_keys[i]
         db2 = db2.drop(the_key, 1)
     return db2
+
+def cut_by_x(dfp, col_name, Nmin, Nmax, act_code):
+    '''Given a dataframe, return a dataframe giving mean of activity hours for the i_th subgroup of category'''
+    df = dfp
+    df_list = []
+    for i in range(Nmin, Nmax):
+        new_df = df[df[col_name] == i]  # pick out rows with values that bin into "i"
+        new_df = new_df[activity_columns(df, act_code)].mean() / 60 * 7 # cut down included columns
+        df_list.append(new_df)
+    use_cols = activity_columns(df, act_code)
+    df_combined = pd.DataFrame(columns=use_cols)
+    for i in range(Nmin, Nmax):
+        df_combined.loc[i-Nmin] = df_list[i-Nmin]
+    df_combined = merge_2nd_level(df_combined)
+    print_cols  = cat_descriptions(df_combined, act_code)
+    for i in range(len(print_cols)):
+        print_cols[i] = print_cols[i][:20]
+    df_combined.columns = print_cols
+    return df_combined
+
+def cut_by_sex(dfp, act_code):
+    df = dfp
+    df_ret = cut_by_x(df, "TESEX", 1, 3, act_code)
+    df_ret.index = ["men", "women"]
+    return df_ret
+
+def cut_by_children(dfp, act_code):
+    df = dfp
+    df_ret = cut_by_x(df, "TRCHILDNUM", 0, 5, act_code)
+    df_ret.index = [str(i)+" children" for i in range(5)]
+    return df_ret
+
+def cut_by_age(dfp, act_code):
+    df = dfp
+    df_ret = cut_by_x(df, "TEAGE", 0, 85, act_code)
+    df_ret.index = [str(i)+" yrs" for i in range(85)]
+    return df_ret
 
 
 if __name__ == '__main__':
