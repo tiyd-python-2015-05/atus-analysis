@@ -4,7 +4,10 @@
 # Temporary data
 .ipynb_checkpoints/
 
-
+asusdata/
+.DS_Store
+.envrc
+.direnv/
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
