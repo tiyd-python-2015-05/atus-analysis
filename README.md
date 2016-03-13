@@ -1,3 +1,22 @@
+Summary:
+I looked at many way people spend time against their age. Take a look at the 
+ipython notebook for the calculations. Here are a few summaries:
+
+-sleep vs age: upright parabola, centered around 50 years. 50 year olds on 
+average get the least amount of sleep. Going both directions, older and younger, people tend to get more sleep.
+
+-religious activity vs age: roughly slow steady increase until a big spike around 60-80 year olds
+
+-socializing vs aged: heightened around 20 year olds, and a noticable decrease into 30's. 
+slow ups and downs from there
+
+-civic obligations vs age: sharp spike around 60-70 year olds
+
+NOTE:This is by no means comprehensive. The data that was used has many facets, and is spread out in different ways, making it difficult to aggregate all of it to a single statistic.
+Something else to note about the data is there is  no "multi-tasking", i.e. if somebody is grooming they cannot be socializing at the same time.
+
+
+
 # American Time Use Analysis
 
 ## Description

@@ -1,3 +1,5 @@
 pandas
 ipython[notebook]
 matplotlib
+re
+numpy
